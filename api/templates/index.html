@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="mt-4 mb-3">Paranuara Challenge</h1>
+      <p class="lead">
+          A set of APIs to query data about Paranuara's companies and citizens.
+      </p>      
+      <ul class="list-group">
+        <li class="list-group-item">
+            Given a company, the API needs to return all their employees.
+            <p>
+              <a href="http://localhost:8000/api/v1/company/1/">api/v1/company/:company_id/</a>
+            </p>
+        </li>
+        <li class="list-group-item">
+            Given 2 people, provide their information (Name, Age, Address, Phone) and the list of their friends in common which have brown eyes and are still alive.
+            <p>
+              <a href="http://localhost:8000/api/v1/person/1/2/">api/v1/person/:id1/:id2/</a>
+            </p>
+        </li>
+        <li class="list-group-item">
+            Given 1 people, provide a list of fruits and vegetables they like.
+            <p>
+              <a href="http://localhost:8000/api/v1/person/1/food/">api/v1/person/:id/food/</a>
+            </p>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

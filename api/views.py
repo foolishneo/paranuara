@@ -1,20 +1,27 @@
 from __future__ import with_statement
+from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 from rest_framework import status
 import json 
 
+# global variables to contain data and loaded once
 company_data = []
 people_data = []
 fruits_data = []
 alive_brown_eyes = []
 company_employees = []
 
+def index(request):
+    return render(request, 'index.html')
+
 @api_view(['GET'])
-def get_person_food(request, id):   
+def get_person_favourite_food(request, id):   
     global people_data
-    load_json()
+    global fruits_data
+    load_people_json()
+    load_fruits_json()
 
     person = [ p for p in people_data if p['index'] == id ][0]
     username = person['email'].split('@')[0]
@@ -30,7 +37,7 @@ def get_person_food(request, id):
     })
 
 @api_view(['GET'])
-def get_employees_by_company_id(request, company_id):
+def get_company_employees(request, company_id):
     global company_employees
     load_company_employees()    
     
@@ -39,11 +46,31 @@ def get_employees_by_company_id(request, company_id):
             return Response(company_employees[i].get('employees', 'This company has no employee'))         
     raise NotFound(f'Company (id={company_id}) not found. Check company_id in the URL')            
 
+def load_company_employees():
+    global company_data
+    global people_data
+    global company_employees
+
+    load_company_json()
+    load_people_json()
+    
+    if not company_employees:
+        for i in range(len(people_data)):            
+            company_employees = add_employees(company_data, people_data[i])
+
+def add_employees(company_data, employee):
+    for i in range(len(company_data)):
+        if company_data[i]['index'] == employee['company_id']:
+            if 'employees' not in company_data[i].keys():
+                company_data[i]['employees'] = []
+            company_data[i]['employees'].append(employee)
+    return company_data    
+
 @api_view(['GET'])
-def get_people_by_id(request, id1, id2):   
+def get_people_common_friends(request, id1, id2):   
     global people_data   
     global alive_brown_eyes    
-    load_json()
+    load_people_json()
     
     person_1 = get_person_info(id1)
     person_2 = get_person_info(id2)
@@ -71,26 +98,7 @@ def get_person_info(id):
     else:
         raise NotFound(f'Person (id={id}) not found. Check person_id in the URL')    
 
-def load_company_employees():
-    global company_data
-    global people_data
-    global company_employees
-
-    load_json()
-    
-    if not company_employees:
-        for i in range(len(people_data)):            
-            company_employees = add_employees(company_data, people_data[i])
-
-def add_employees(company_data, employee):
-    for i in range(len(company_data)):
-        if company_data[i]['index'] == employee['company_id']:
-            if 'employees' not in company_data[i].keys():
-                company_data[i]['employees'] = []
-            company_data[i]['employees'].append(employee['name'])
-    return company_data
-
-def load_json():    
+def load_company_json():    
     global company_data
     if not company_data:
         company_data_file = 'resources/companies.json'
@@ -99,7 +107,8 @@ def load_json():
                 company_data = json.load(f) 
         except EnvironmentError:
             raise NotFound(f'Data file not found: {company_data_file}')
-    
+        
+def load_people_json():      
     global people_data
     if not people_data:
         try:
@@ -109,6 +118,7 @@ def load_json():
         except EnvironmentError:
             raise NotFound(f'Data file not found: {people_data_file}')
 
+def load_fruits_json():              
     global fruits_data
     if not fruits_data:
         try:
