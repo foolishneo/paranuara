@@ -54,9 +54,9 @@ The application is running at localhost:8000
 
 ## Notes:
 
-1. All APIs use id as the parameter to query data
+1. All APIs use *id* as the parameter to query data.
 
-2. To distinguish between fruits and vegetables, a list of fruits is declared in fruits.json. It would be better if I can check it using a public API but I couldn't find such a resource
+2. To distinguish between fruits and vegetables, a list of fruits is declared in fruits.json. It would be better if I can verify it using a public API but I couldn't find such a resource.
 
 3. *username* is constructed from the person's email. As all people in this planet are using the same domain name (earthmark.com), their respective email handle should be unique and could be used as their username. If necessary, we can mix it with the *guid* or implement a *check_if_username_exists* function to make sure there is no duplication.
 
