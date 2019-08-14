@@ -22,8 +22,12 @@ def get_person_favourite_food(request, id):
     global fruits_data
     load_people_json()
     load_fruits_json()
-
-    person = [ p for p in people_data if p['index'] == id ][0]
+    
+    person = [ p for p in people_data if p['index'] == id ]
+    if not person:
+        raise NotFound(f'Person (id={id}) not found. Check id in the URL') 
+    else:
+        person = person[0]
     username = person['email'].split('@')[0]
     favourite_food = person['favouriteFood']
     fav_fruits = [ f for f in favourite_food if f.upper() in fruits_data ]
@@ -88,15 +92,15 @@ def get_people_common_friends(request, id1, id2):
 
 def get_person_info(id):
     global people_data
-    person = [p for p in people_data if p["index"] == id][0]
-
-    if person:
+    person = [p for p in people_data if p["index"] == id]
+    if not person:
+        raise NotFound(f'Person (id={id}) not found. Check id in the URL') 
+    else:
+        person = person[0]
         properties = ['name', 'age', 'address', 'phone']
         filtered_person = {k:person[k] for k in properties}
         filtered_person['friends'] = {f['index'] for f in person['friends']}
         return filtered_person
-    else:
-        raise NotFound(f'Person (id={id}) not found. Check person_id in the URL')    
 
 def load_company_json():    
     global company_data
