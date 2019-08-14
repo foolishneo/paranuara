@@ -14,7 +14,7 @@ A set of APIs to query data about Paranuara's companies and citizens.
 
 3. Given 1 people, provide a list of fruits and vegetables they like.
 
-> **GET** api/v1/person/:id>/food/
+> **GET** api/v1/person/:id/food/
 
 ## Installation
 

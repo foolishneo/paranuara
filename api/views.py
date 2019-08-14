@@ -104,7 +104,7 @@ def load_company_json():
         company_data_file = 'resources/companies.json'
         try:
             with open(company_data_file) as f:                
-                company_data = json.load(f) 
+                company_data = json.load(f)                 
         except EnvironmentError:
             raise NotFound(f'Data file not found: {company_data_file}')
         

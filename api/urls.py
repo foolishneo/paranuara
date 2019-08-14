@@ -6,16 +6,16 @@ urlpatterns = [
     path(
         'api/v1/company/<int:company_id>/',
         views.get_company_employees,
-        name="get company's employees"
+        name="get-company-employees"
     ),
     path(
         'api/v1/person/<int:id1>/<int:id2>/',
         views.get_people_common_friends,
-        name='get people info and common friends'
+        name='get-people-common-friends'
     ),
     path(
         'api/v1/person/<int:id>/food/',
         views.get_person_favourite_food,
-        name='get person favourite fruits and vegetables'
+        name='get-person-favourite-fruits-vegetables'
     ),
 ]
