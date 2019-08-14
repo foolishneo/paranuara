@@ -49,7 +49,7 @@ A set of APIs to query data about Paranuara's companies and citizens.
 
 The application is running at localhost:8000
 
-4. Run the tests
+5. Run the tests
 > python3 manage.py test
 
 ## Notes:
